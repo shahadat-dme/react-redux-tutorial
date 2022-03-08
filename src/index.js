@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import store from "./store"
+import App from './App';
+
 // import Counter from './Counter';
 // import store from "./storeCounter"
+// import Counter2 from './Counter2';
+// import store from "./storeCounter2"
 
 ReactDOM.render(
   <Provider store={store}>
   <React.StrictMode>
     <App />
     {/* <Counter/> */}
+    {/* <Counter2/> */}
   </React.StrictMode>
   </Provider>,
   document.getElementById('root')
