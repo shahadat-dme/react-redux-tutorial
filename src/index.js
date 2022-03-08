@@ -5,11 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import store from "./store"
+// import Counter from './Counter';
+// import store from "./storeCounter"
 
 ReactDOM.render(
   <Provider store={store}>
   <React.StrictMode>
     <App />
+    {/* <Counter/> */}
   </React.StrictMode>
   </Provider>,
   document.getElementById('root')
