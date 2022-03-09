@@ -1,25 +1,38 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+import Auth from "./components/Auth";
+import Layout from "./components/Layout";
+import Notification from "./components/Notification";
+import { fetchData, sendCartData } from "./store/cart-actions";
+import { uiActions } from "./store/ui-slice";
+let isFirstRender = true;
 function App() {
-  const counter = useSelector((state) => state.counter);
   const dispatch = useDispatch();
-  const increment = () => {
-    dispatch({type: 'INC'})
-  };
-  const decrement = () => {
-    dispatch({type: 'DEC'})
-  };
-  const addBy = () => {
-    dispatch({type:'ADD',payload: 100})
-  }
+  const notification = useSelector((state) => state.ui.notification);
+  const cart = useSelector((state) => state.cart);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
+  useEffect(() => {
+    if (isFirstRender) {
+      isFirstRender = false;
+      return;
+    }
+
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
+  }, [cart, dispatch]);
   return (
-    <div>
-      <h1>Counter App</h1>
-      <h2>{counter}</h2>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-      <button onClick={addBy}>Add Value</button>
+    <div className="App">
+      {notification && (
+        <Notification type={notification.type} message={notification.message} />
+      )}
+      {!isLoggedIn && <Auth />}
+      {isLoggedIn && <Layout />}
     </div>
   );
 }
